@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>KYC Document Expiry Monitor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <h1>KYC Document Expiry Monitor</h1>
+        <p>Banking Compliance System</p>
+    </header>
+
+
+    <div class="container">
+
+        <!-- CUSTOMER FORM -->
+
+        <div class="box">
+
+            <h2>Add Customer KYC Details</h2>
+
+            <form action="/add" method="POST">
+
+                <label>Customer ID</label>
+                <input type="text"
+                       name="customer_id"
+                       placeholder="Example: C101"
+                       required>
+
+
+                <label>Customer Name</label>
+                <input type="text"
+                       name="name"
+                       placeholder="Enter customer name"
+                       required>
+
+
+                <label>Account Number</label>
+                <input type="text"
+                       name="account_no"
+                       placeholder="Example: A1001"
+                       required>
+
+
+                <label>Branch</label>
+
+                <select name="branch" required>
+
+                    <option value="">Select Branch</option>
+
+                    <option value="Guntur">
+                        Guntur
+                    </option>
+
+                    <option value="Vijayawada">
+                        Vijayawada
+                    </option>
+
+                    <option value="Hyderabad">
+                        Hyderabad
+                    </option>
+
+                    <option value="Chennai">
+                        Chennai
+                    </option>
+
+                </select>
+
+
+                <label>Date of Birth</label>
+
+                <input type="text"
+                       name="dob"
+                       placeholder="DD-MM-YYYY or DD/MM/YYYY"
+                       required>
+
+
+                <label>KYC Document</label>
+
+                <select name="document_type" required>
+
+                    <option value="">
+                        Select Document
+                    </option>
+
+                    <option value="Aadhaar">
+                        Aadhaar
+                    </option>
+
+                    <option value="PAN">
+                        PAN
+                    </option>
+
+                    <option value="Passport">
+                        Passport
+                    </option>
+
+                    <option value="Driving License">
+                        Driving License
+                    </option>
+
+                </select>
+
+
+                <label>KYC Expiry Date</label>
+
+                <input type="date"
+                       name="kyc_expiry"
+                       required>
+
+
+                <label>Account Holder</label>
+
+                <select name="holder_type" required>
+
+                    <option value="">
+                        Select Holder
+                    </option>
+
+                    <option value="Primary Holder">
+                        Primary Holder
+                    </option>
+
+                    <option value="Joint Holder 1">
+                        Joint Holder 1
+                    </option>
+
+                    <option value="Joint Holder 2">
+                        Joint Holder 2
+                    </option>
+
+                </select>
+
+
+                <button type="submit">
+                    Add Customer
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- BRANCH REPORT -->
+
+        <div class="box">
+
+            <h2>Branch-wise Pending Re-KYC Report</h2>
+
+            <form action="/report" method="GET">
+
+                <select name="branch" required>
+
+                    <option value="">
+                        Select Branch
+                    </option>
+
+                    <option value="Guntur">
+                        Guntur
+                    </option>
+
+                    <option value="Vijayawada">
+                        Vijayawada
+                    </option>
+
+                    <option value="Hyderabad">
+                        Hyderabad
+                    </option>
+
+                    <option value="Chennai">
+                        Chennai
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Generate Report
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- CUSTOMER RECORDS -->
+
+        <div class="box">
+
+            <h2>Customer KYC Records</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Name</th>
+                        <th>Account No</th>
+                        <th>Branch</th>
+                        <th>DOB</th>
+                        <th>Document</th>
+                        <th>KYC Expiry</th>
+                        <th>Holder</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for customer in customers %}
+
+                    <tr>
+
+                        <td>
+                            {{ customer["customer_id"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["name"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["account_no"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["branch"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["dob"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["document_type"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["kyc_expiry"] }}
+                        </td>
+
+                        <td>
+                            {{ customer["holder_type"] }}
+                        </td>
+
+                        <td>
+
+                            {% if customer["status"] == "Expired" %}
+
+                                <span class="expired">
+                                    Expired
+                                </span>
+
+                            {% elif customer["status"] == "Expiring Soon" %}
+
+                                <span class="warning">
+                                    Expiring Soon
+                                </span>
+
+                            {% else %}
+
+                                <span class="valid">
+                                    Valid
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="9">
+                            No customer records found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

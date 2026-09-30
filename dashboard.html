@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}KYC Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>KYC Compliance Dashboard</h1>
+
+<div class="dashboard-cards">
+
+    <!-- TOTAL CUSTOMERS -->
+
+    <div class="dashboard-card total">
+
+        <h3>Total Customers</h3>
+
+        <h1>
+            {{ total_customers }}
+        </h1>
+
+    </div>
+
+
+    <!-- VALID KYC -->
+
+    <div class="dashboard-card valid">
+
+        <h3>Valid KYC</h3>
+
+        <h1>
+            {{ valid_customers }}
+        </h1>
+
+    </div>
+
+
+    <!-- EXPIRING SOON -->
+
+    <div class="dashboard-card expiring">
+
+        <h3>Expiring Soon</h3>
+
+        <h1>
+            {{ expiring_customers }}
+        </h1>
+
+    </div>
+
+
+    <!-- EXPIRED -->
+
+    <div class="dashboard-card expired">
+
+        <h3>Expired</h3>
+
+        <h1>
+            {{ expired_customers }}
+        </h1>
+
+    </div>
+
+</div>
+
+
+<h2>Recent Customers</h2>
+
+<table>
+
+    <thead>
+
+        <tr>
+            <th>Customer</th>
+            <th>Account</th>
+            <th>Branch</th>
+            <th>Expiry</th>
+            <th>Status</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for customer in recent_customers %}
+
+        <tr>
+
+            <td>
+                {{ customer.full_name }}
+            </td>
+
+            <td>
+                {{ customer.account_number }}
+            </td>
+
+            <td>
+                {{ customer.branch_name }}
+            </td>
+
+            <td>
+                {{ customer.kyc_expiry_date }}
+            </td>
+
+            <td>
+                {{ customer.kyc_status }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

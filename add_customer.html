@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <h1>Add Customer</h1>
+
+    <p>
+        Enter customer and KYC information.
+    </p>
+
+
+    <form method="POST"
+          class="customer-form">
+
+        <div class="form-grid">
+
+            <div>
+
+                <label>Customer Number</label>
+
+                <input
+                    type="text"
+                    name="customer_number"
+                    placeholder="CUST001"
+                    required
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    name="full_name"
+                    placeholder="Customer name"
+                    required
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Date of Birth</label>
+
+                <input
+                    type="text"
+                    name="dob"
+                    placeholder="DD-MM-YYYY"
+                    required
+                >
+
+                <small>
+                    Example: 15-08-2002
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <label>Phone</label>
+
+                <input
+                    type="text"
+                    name="phone"
+                    placeholder="9876543210"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="customer@gmail.com"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Branch</label>
+
+                <select
+                    name="branch_id"
+                    required>
+
+                    <option value="">
+                        Select Branch
+                    </option>
+
+                    {% for branch in branches %}
+
+                    <option value="{{ branch.branch_id }}">
+
+                        {{ branch.branch_name }}
+                        - {{ branch.city }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>Account Type</label>
+
+                <select
+                    name="account_type"
+                    required>
+
+                    <option value="">
+                        Select Account Type
+                    </option>
+
+                    <option value="Savings">
+                        Savings
+                    </option>
+
+                    <option value="Current">
+                        Current
+                    </option>
+
+                    <option value="Joint">
+                        Joint
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>Account Number</label>
+
+                <input
+                    type="text"
+                    name="account_number"
+                    placeholder="ACC1001"
+                    required
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>KYC Document</label>
+
+                <select
+                    name="kyc_document"
+                    required>
+
+                    <option value="">
+                        Select Document
+                    </option>
+
+                    <option value="Aadhaar">
+                        Aadhaar
+                    </option>
+
+                    <option value="PAN">
+                        PAN
+                    </option>
+
+                    <option value="Passport">
+                        Passport
+                    </option>
+
+                    <option value="Driving License">
+                        Driving License
+                    </option>
+
+                    <option value="Voter ID">
+                        Voter ID
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>KYC Issue Date</label>
+
+                <input
+                    type="text"
+                    name="kyc_issue_date"
+                    placeholder="DD-MM-YYYY"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>KYC Expiry Date</label>
+
+                <input
+                    type="text"
+                    name="kyc_expiry_date"
+                    placeholder="DD-MM-YYYY"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-buttons">
+
+            <button type="submit">
+                Save Customer
+            </button>
+
+            <a href="{{ url_for('customers') }}"
+               class="btn secondary">
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
